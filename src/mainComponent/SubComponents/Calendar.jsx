@@ -110,6 +110,15 @@ const CalendarDetails = () =>
   const [assigneeName, setAssigneeName] = useState(null)
   const [reporterName, setReporterName] = useState(null);
 
+  const clearDetails = () =>
+  {
+    setTagName(null);
+    setProjectName(null);
+    setAssigneeName(null);
+    setReporterName(null)
+    setModalDetails(null)
+    setShow(null)
+  }
   let subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(null);
 
@@ -117,12 +126,10 @@ const CalendarDetails = () =>
 
   const handleClose = () => {
     setShow(null);
-    console.log('start date: '+ startDate);
-    console.log('end date: '+ endDate);
-    console.log('tagName: '+ tagName);
-    console.log('project name: '+ projectName);
-    console.log(events);
-
+    clearDetails();
+  }
+  const handleSubmit = () =>
+  {
     let obj = {
       'id': events.length + 1,
       'title': modalDetails,
@@ -130,10 +137,14 @@ const CalendarDetails = () =>
       'start': startDate,
       'end': endDate,
       'projectName': projectName,
-      'tagName': tagName
+      'tagName': tagName,
+      'assigneeName': assigneeName,
+      'reporterName': reporterName
     }
     // setEvents((prev) => [...prev, { start, end, title }])
-    setEvents((prev) => [...prev, obj] )
+    setEvents((prev) => [...prev, obj])
+
+    clearDetails();
   }
   const handleShow = () => setShow(true);
 
@@ -151,28 +162,24 @@ const CalendarDetails = () =>
     ({ start, end }) =>
     {
       setShow({ id: 0 })
-      console.log('start ');
-      console.log(start);
-      console.log('end')
-      console.log(end)
-      // console.log(startDate)
-      // const title = window.prompt('New Event name')
-      // if (title)
-      // {
-      //   setEvents((prev) => [...prev, { start, end, title }])
-      // }
+      setStartDate(start);
+      setEndDate(start);
+      
     },
     [setEvents]
   )
 
   const handleSelectEvent = useCallback((event) =>
   {
-    console.log('event event');
-    console.log(event)
     setModalTitle('Event')
     setModalDetails(event.title)
     setShow(event)
-    // window.alert('event.title')
+
+    if (event.tagName) setTagName(event.tagName);
+    if (event.projectName) setProjectName(event.projectName)
+    if (event.assigneeName) setAssigneeName(event.assigneeName);
+    if (event.reporterName) setReporterName(event.reporterName)
+    
   }, []
   )
 
@@ -190,9 +197,6 @@ const CalendarDetails = () =>
       return i;
     })
 
-    console.log('updated my event');
-    console.log(updatedMyEvents);
-
     setEvents(updatedMyEvents);
     setShow(null)
   }
@@ -202,8 +206,6 @@ const CalendarDetails = () =>
 
   const removeEvent = () =>
   {
-    console.log('remove event');
-    console.log(show);
 
     let newEvents = myEvents.filter(i => i.id != show.id)
 
@@ -211,10 +213,9 @@ const CalendarDetails = () =>
     setShow(null)
   }
 
-  console.log('userName userName')
-  console.log(userName)
-  console.log(reporterName)
-  console.log(reporterName && userName.map(i => i.value != userName))
+  console.log('report');
+  console.log(events)
+
   return (
     <div>
       <div className="myCustomHeight">
@@ -245,86 +246,66 @@ const CalendarDetails = () =>
           </Modal.Header>
           <Modal.Body>
 
-            {
-              editMode ? <Table striped bordered hover size="sm">
-                <tbody> <tr>
-                  <td><Form.Control type="text" value={modalDetails} onChange={(e) => setModalDetails(e.target.value)} placeholder="" /></td>
-                  <td onClick={() => setEditMode(!editMode)}><BsFillPencilFill /></td>
-                  <td onClick={saveUpdate}><BsFilePlus /></td>
-                </tr>
-                </tbody>
-              </Table>
-                :
-                show && show.id ? (
-                  <Table striped bordered hover size="sm">
-                    <tbody>
-                      <tr>
-                        <td>{modalDetails}</td>
-                        <td onClick={() => setEditMode(!editMode)}><BsFillPencilFill /></td>
-                        <td onClick={removeEvent}><BsXLg /></td>
-
-                      </tr>
-                    </tbody>
-                  </Table>
-                )
-                  : (
-
-                    <Form className='row'>
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Event Title</Form.Label>
-                        <Form.Control type="text" value={modalDetails} onChange={(e) => setModalDetails(e.target.value)} placeholder="" />
-
-                      </Form.Group>
-
-                      <Form.Group className="mb-3 col-md-6" controlId="formBasicPassword">
-                        <Form.Label>Start Date</Form.Label>
-                        <DatePicker
-
-                          selected={startDate}
-                          onChange={(date) => setStartDate(date)}
-                          showTimeSelect
-                          dateFormat="MMMM d, yyyy h:mm aa"
-                          todayButton={"Today"} />
-                      </Form.Group>
-
-                      <Form.Group className="mb-3 col-md-6" controlId="formBasicPassword">
-                        <Form.Label>End Date</Form.Label>
-                        <DatePicker
-                          forma
-                          selected={endDate}
-                          onChange={(date) => setEndDate(date)}
-                          showTimeSelect
-                          dateFormat="MMMM d, yyyy h:mm aa"
-                          todayButton={"Today"} />
-                      </Form.Group>
-
-                      <Form.Group className="mb-3 col-md-6" controlId="formBasicPassword">
-                        <Form.Label>Assignee</Form.Label>
-                        <Select isClearable value={assigneeName} onChange={(val) => setAssigneeName(val)} options={assigneeName ? userName.filter(i => i.value != assigneeName.value) : userName} />
-
-                      </Form.Group>
-
-                      <Form.Group className="mb-3 col-md-6" controlId="formBasicPassword">
-                        <Form.Label>Reporter</Form.Label>
-                        <Select isClearable value={reporterName} onChange={(val) => setReporterName(val)} options={reporterName ? userName.filter(i => i.value != reporterName.value) : userName} />
-                      </Form.Group>
-
-                      <Form.Group className="mb-3 col-md-6" controlId="formBasicPassword">
-                        <Form.Label>Project Name</Form.Label>
-                        <Select isClearable value={projectName} onChange={(val) => setProjectName(val)} options={projectName ? projectList.filter(i => i.value != projectName.value) : projectList} />
-                      </Form.Group>
-
-                      <Form.Group className="mb-3 col-md-6" controlId="formBasicPassword">
-                        <Form.Label>Tag</Form.Label>
-                        <Select isClearable value={tagName} onChange={(val) => setTagName(val)} options={tagName ? tags.filter(i => i.value != tagName.value) : tags} />
-                      </Form.Group>
 
 
-                    </Form>
+            <Form className='row'>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Event Title</Form.Label>
+                <Form.Control type="text" value={modalDetails} onChange={(e) => setModalDetails(e.target.value)} placeholder="" />
+
+              </Form.Group>
+
+              <Form.Group className="mb-3 col-md-6" controlId="formBasicPassword">
+                <Form.Label>Start Date</Form.Label>
+                <DatePicker
+                  minDate={startDate}
+                  selected={startDate}
+                  onChange={(date) => {
+                    setStartDate(date)
+                    setEndDate(date)
+                  }}
+                  showTimeSelect
+                  dateFormat="MMMM d, yyyy h:mm aa"
+                  todayButton={"Today"} />
+              </Form.Group>
+
+              <Form.Group className="mb-3 col-md-6" controlId="formBasicPassword">
+                <Form.Label>End Date</Form.Label>
+                <DatePicker
+                  minDate={startDate}
+                  selected={endDate}
+                  onChange={(date) => setEndDate(date)}
+                  showTimeSelect
+                  dateFormat="MMMM d, yyyy h:mm aa"
+                  todayButton={"Today"} />
+              </Form.Group>
+
+              <Form.Group className="mb-3 col-md-6" controlId="formBasicPassword">
+                <Form.Label>Assignee</Form.Label>
+                <Select isClearable value={assigneeName} onChange={(val) => setAssigneeName(val)} options={assigneeName ? userName.filter(i => i.value != assigneeName.value) : userName} />
+
+              </Form.Group>
+
+              <Form.Group className="mb-3 col-md-6" controlId="formBasicPassword">
+                <Form.Label>Reporter</Form.Label>
+                <Select isClearable value={reporterName} onChange={(val) => setReporterName(val)} options={reporterName ? userName.filter(i => i.value != reporterName.value) : userName} />
+              </Form.Group>
+
+              <Form.Group className="mb-3 col-md-6" controlId="formBasicPassword">
+                <Form.Label>Project Name</Form.Label>
+                <Select isClearable value={projectName} onChange={(val) => setProjectName(val)} options={projectName ? projectList.filter(i => i.value != projectName.value) : projectList} />
+              </Form.Group>
+
+              <Form.Group className="mb-3 col-md-6" controlId="formBasicPassword">
+                <Form.Label>Tag</Form.Label>
+                <Select isClearable value={tagName} onChange={(val) => setTagName(val)} options={tagName ? tags.filter(i => i.value != tagName.value) : tags} />
+              </Form.Group>
 
 
-                  )
-            }
+            </Form>
+
+
+
 
 
 
@@ -336,8 +317,11 @@ const CalendarDetails = () =>
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleClose}>
-              Save Changes
+            <Button variant="primary" onClick={show && show.id ? saveUpdate : handleSubmit}>
+              {
+                show && show.id ? 'Update Changes' : 'save'
+              }
+
             </Button>
           </Modal.Footer>
         </Modal>
