@@ -3,16 +3,16 @@ import img from '../../assets/img/MainComponentImages/dashboard.png'
 import 'chartjs-adapter-moment';
 
 import
-{
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  TimeScale
-} from 'chart.js';
+  {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+    TimeScale
+  } from 'chart.js';
 import { Bar, Chart, Line } from 'react-chartjs-2';
 import faker from 'faker';
 
@@ -98,60 +98,14 @@ export const options = {
       display: true,
       text: 'Chart.js Bar Chart - Stacked',
     },
-    scaleLabel: function (valuePayload)
-    {
-      console.log(new Date(valuePayload.value * 1000).toISOString());
-      return new Date(valuePayload.value * 1000).toISOString().substr(12, 7);
-    },
-    multiTooltipTemplate: function (valuePayload)
-    {
-      return valuePayload.datasetLabel + " " + new Date(valuePayload.value * 1000).toISOString().substr(12, 7)
-    },
-
-    tooltip: {
-      callbacks: {
-        title: (xDatapoint) => { return xDatapoint.raw },
-        // label: (yDatapoint) => {return yDatapoint.raw},
-        label: function (tooltipItem, data)
-        {
-          console.log(tooltipItem.raw);
-          console.log(data)
-          console.log(tooltipItem);
-          return new Date(tooltipItem.raw * 1000).toISOString().substr(12, 7)// tooltipItem.raw;
-          // return "" + moment(tooltipItem.raw[0], "HH:mm").format("hh:mm A") + "-" + moment(tooltipItem.raw[1], "HH:mm").format("hh:mm A");tooltipItem.raw;
-        }
-      }
-    },
   },
-  maintainAspectRatio: true,
   responsive: true,
   scales: {
     x: {
       stacked: true,
-      // barThickness : 73,
-      // categoryPercentage: 1.0,
-      categorySpacing: 0,
-      // barPercentage: 0.8,
     },
-    //   xAxes: [{
-    //     barThickness : 73,
-    //     categorySpacing: 0
-    // }],
     y: {
       stacked: true,
-      ticks: {
-        // Include a dollar sign in the ticks
-        callback: function (value, index, ticks)
-        {
-          return new Date(value * 1000).toISOString().substr(12, 7);
-          // return '$' + value;
-        }
-      },
-      value: function (valuePayload)
-      {
-        console.log(new Date(valuePayload.value * 1000).toISOString());
-        return new Date(valuePayload.value * 1000).toISOString().substr(12, 7);
-      },
       // type: 'time'
     },
   },
@@ -186,50 +140,6 @@ const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 
 
 export const data = {
-  labels: ['modo 1', 'modo 2', 'modo 13'],
-  datasets: [{
-    label: "# Durata reale",
-    //fillColor: "rgba(51, 122, 183, 0.2)",
-    //strokeColor: "rgba(51, 122, 183, 0.6)",
-    //pointColor: "rgba(51, 122, 183, 0.6)",
-    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-    borderColor: 'rgba(255,99,132,1)',
-
-    // barPercentage: 0.8,
-    barThickness: 70,
-    // maxBarThickness: 8,
-    // minBarLength: 70,
-    // categorySpacing: 0,
-    // categoryPercentage: 0,
-    barPercentage: 0.9,
-    categoryPercentage: 1,
-
-    // borderWidth: 1,
-    // hoverBackgroundColor: 'red',
-
-    data: [6100, 615, 705]
-  }, {
-    label: "# Ore in",
-    //fillColor: "rgba(241, 88, 84, 0.2)",
-    //strokeColor: "rgba(241, 88, 84, 0.6)",
-    //pointColor: "rgba(241, 88, 84, 0.6)",
-    backgroundColor: '#DEF797',
-    borderColor: 'rgba(255,99,132,1)',
-
-    // barPercentage: 0.8,
-    barThickness: 70,
-    // maxBarThickness: 8,
-    // minBarLength: 70,
-    // categorySpacing: 0,
-    // categoryPercentage: 0,
-    barPercentage: 0.9,
-    categoryPercentage: 1,
-
-    // borderWidth: 1,
-    // hoverBackgroundColor: 'yellow',
-    data: [0, 0, 465]
-  }]
-
   // labels: ["Day 1", "Day 2", "Day 3"],
   // datasets: [{
   //   label: 'working',
@@ -258,24 +168,24 @@ export const data = {
   //   backgroundColor: "orange",
   // },
   // ]
-  // labels,
-  // datasets: [
-  //   {
-  //     label: 'Dataset 1',
-  //     data: [100, 200, 300, 400, 500, 600, 111, 222, 333, 444, 555, 666],// labels.map(() => faker.datatype.number({ min: 100, max: 1000 })),
-  //     backgroundColor: 'rgb(255, 99, 132)',
-  //   },
-  //   {
-  //     label: 'Dataset 2',
-  //     data: [100, 200, 300, 400, 500, 600, 111, 222, 333, 444, 555, 666],
-  //     backgroundColor: 'rgb(75, 192, 192)',
-  //   },
-  //   {
-  //     label: 'Dataset 3',
-  //     data: [100, 200, 300, 400, 500, 600, 111, 222, 333, 444, 555, 666],
-  //     backgroundColor: 'rgb(53, 162, 235)',
-  //   },
-  // ],
+  labels,
+  datasets: [
+    {
+      label: 'Dataset 1',
+      data: [100, 200, 300, 400, 500, 600, 111, 222, 333, 444, 555, 666],// labels.map(() => faker.datatype.number({ min: 100, max: 1000 })),
+      backgroundColor: 'rgb(255, 99, 132)',
+    },
+    {
+      label: 'Dataset 2',
+      data: [100, 200, 300, 400, 500, 600, 111, 222, 333, 444, 555, 666],
+      backgroundColor: 'rgb(75, 192, 192)',
+    },
+    {
+      label: 'Dataset 3',
+      data: [100, 200, 300, 400, 500, 600, 111, 222, 333, 444, 555, 666],
+      backgroundColor: 'rgb(53, 162, 235)',
+    },
+  ],
 };
 
 const Dashboard = () =>
@@ -286,10 +196,7 @@ const Dashboard = () =>
     <div>
       <img src={img} alt='' />
 
-<div style={{ width: '700px'}}>
-<Bar options={options} data={data} />
-</div>
-     
+      <Bar options={options} data={data} />
       {/* <Line options={options} data={data} /> */}
 
       {/* <Chart  data={dataBarOption} /> */}

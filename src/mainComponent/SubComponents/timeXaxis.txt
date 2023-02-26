@@ -1,0 +1,207 @@
+import React from 'react'
+import img from '../../assets/img/MainComponentImages/dashboard.png'
+import 'chartjs-adapter-moment';
+
+import
+  {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+    TimeScale
+  } from 'chart.js';
+import { Bar, Chart, Line } from 'react-chartjs-2';
+import faker from 'faker';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  TimeScale
+);
+
+// const config = {
+//   type: 'line',
+//   data: data,
+//   options: {
+//     responsive: true,
+//     scales: {
+//       x: {
+//         type: 'time',
+//       }
+//     }
+//   },
+// };
+
+export const options = {
+  responsive: true,
+  indexAxis: 'y',
+  plugins: {
+    legend: {
+      display: true
+    },
+    tooltip: {
+      callbacks: {
+        title: (xDatapoint) => { return xDatapoint.raw },
+        // label: (yDatapoint) => {return yDatapoint.raw},
+        label: function (tooltipItem, data)
+        {
+          console.log(tooltipItem.raw);
+          console.log(data)
+          console.log(tooltipItem);
+          return tooltipItem.raw;
+          // return "" + moment(tooltipItem.raw[0], "HH:mm").format("hh:mm A") + "-" + moment(tooltipItem.raw[1], "HH:mm").format("hh:mm A");tooltipItem.raw;
+        }
+      }
+    },
+    datalabels: {
+      color: 'white',
+      formatter: (val, ctx) => (ctx.dataset.label)
+    }
+  },
+  scales: {
+    y: {
+      stacked: true
+    },
+    x: {
+      type: 'time',
+      time: {
+        // Luxon format string
+        tooltipFormat: 'YYYY-MM-DD HH:mm',//'DD T' // tooltipFormat: 'DD T'
+        //   displayFormats: {
+        //     'millisecond':'HH:mm:ss',
+        //     'second': 'HH:mm:ss',
+        //     'minute': 'HH:mm:ss',
+        //     'hour': 'HH:mm:ss',
+        //     'day': 'HH:mm:ss',
+        //     'week': 'HH:mm:ss',
+        //     'month': 'HH:mm:ss',
+        //     'quarter': 'HH:mm:ss',
+        //     'year': 'HH:mm:ss',
+        //  }
+      },
+      display: true,
+      min: new Date('2021-10-18T00:00:00'),
+      max: new Date('2021-10-18T23:59:59')
+    }
+  }
+}
+// export const options = {
+//   plugins: {
+//     title: {
+//       display: true,
+//       text: 'Chart.js Bar Chart - Stacked',
+//     },
+//   },
+//   responsive: true,
+//   scales: {
+//     x: {
+//       stacked: true,
+//     },
+//     y: {
+//       stacked: true,
+//       // type: 'time'
+//     },
+//   },
+// };
+
+const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+const dataBar = [
+  { year: 2010, count: 10 },
+  { year: 2011, count: 20 },
+  { year: 2012, count: 15 },
+  { year: 2013, count: 25 },
+  { year: 2014, count: 22 },
+  { year: 2015, count: 30 },
+  { year: 2016, count: 28 },
+];
+
+const dataBarOption = {
+  type: 'bar',
+  data: {
+    labels: dataBar.map(row => row.year),
+    datasets: [
+      {
+        label: 'Acquisitions by year',
+        data: dataBar.map(row => row.count)
+      }
+    ]
+  }
+}
+
+
+
+
+export const data = {
+  labels: ["Day 1", "Day 2", "Day 3"],
+  datasets: [{
+    label: 'working',
+    data: [
+      [new Date('2021-10-18T04:00:00'), new Date('2021-10-19T20:30:00')],
+      [new Date('2021-10-18T06:00:00'), new Date('2021-10-18T17:00:00')]
+    ],
+    backgroundColor: "red",
+  },
+  {
+    label: 'sleep',
+    data: [
+      [new Date('2021-10-18T00:00:00'), new Date('2021-10-18T04:00:00')],
+      [new Date('2021-10-18T00:00:00'), new Date('2021-10-18T06:00:00')],
+      [new Date('2021-10-18T00:00:00'), new Date('2021-10-18T06:00:00')]
+    ],
+    backgroundColor: "blue",
+  },
+  {
+    label: 'sleeping',
+    data: [
+      [new Date('2021-10-18T20:30:00'), new Date('2021-10-18T23:59:59')],
+      [new Date('2021-10-18T17:00:00'), new Date('2021-10-18T23:59:59')],
+      [new Date('2021-10-18T17:00:00'), new Date('2021-10-18T23:59:59')]
+    ],
+    backgroundColor: "orange",
+  },
+  ]
+  // labels,
+  // datasets: [
+  //   {
+  //     label: 'Dataset 1',
+  //     data: [100, 200, 300, 400, 500, 600, 111, 222, 333, 444, 555, 666],// labels.map(() => faker.datatype.number({ min: 100, max: 1000 })),
+  //     backgroundColor: 'rgb(255, 99, 132)',
+  //   },
+  //   {
+  //     label: 'Dataset 2',
+  //     data: [100, 200, 300, 400, 500, 600, 111, 222, 333, 444, 555, 666],
+  //     backgroundColor: 'rgb(75, 192, 192)',
+  //   },
+  //   {
+  //     label: 'Dataset 3',
+  //     data: [100, 200, 300, 400, 500, 600, 111, 222, 333, 444, 555, 666],
+  //     backgroundColor: 'rgb(53, 162, 235)',
+  //   },
+  // ],
+};
+
+const Dashboard = () =>
+{
+  console.log('data structure');
+  console.log(data)
+  return (
+    <div>
+      <img src={img} alt='' />
+
+      <Bar options={options} data={data} />
+      {/* <Line options={options} data={data} /> */}
+
+      {/* <Chart  data={dataBarOption} /> */}
+    </div>
+  )
+}
+
+export default Dashboard

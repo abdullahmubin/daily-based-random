@@ -144,6 +144,8 @@ const CalendarDetails = () =>
     // setEvents((prev) => [...prev, { start, end, title }])
     setEvents((prev) => [...prev, obj])
 
+    console.log('obj obj');
+    console.log(obj)
     clearDetails();
   }
   const handleShow = () => setShow(true);
@@ -212,9 +214,6 @@ const CalendarDetails = () =>
     setEvents(newEvents)
     setShow(null)
   }
-
-  console.log('report');
-  console.log(events)
 
   return (
     <div>
