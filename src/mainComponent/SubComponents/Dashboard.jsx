@@ -287,19 +287,7 @@ const Dashboard = () =>
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-
-  console.log('data structure');
-  console.log(data)
-  console.log('startDate');
-  console.log(startDate)
-
-  let s = moment(startDate, dateFormat).toLocaleString()// .toISOString();
-  let e = moment(startDate, dateFormat).add(6, 'days').toLocaleString()//.toISOString();
   
-  console.log('s');
-  console.log(s);
-  console.log(e)
-
   const handleDateChange = (data) => {
     let [start, end] = data;
 
@@ -308,38 +296,21 @@ const Dashboard = () =>
 
     setStartDate(weekStart)
     setEndDate(weekEnd)
-    let period = moment(weekStart, dateFormat).format('MMMM DD, YYYY') + ' -> ' + moment(weekEnd, dateFormat).format('MMMM DD, YYYY');
-    console.log('period');
-    console.log(period)
-    console.log(new Date(moment(startDate, dateFormat).format('l')))
-
 
     var now = weekStart, dates = [];
-    console.log('now: '+ moment(now));
-    console.log("end: "+ moment(weekEnd))
+    
     while (moment(now).isSameOrBefore(moment(weekEnd))) {
         dates.push(moment(now).format('M/D/YYYY'));
         now = moment(now).add(1, 'days');
     }
-    console.log(dates);
-    // function getDates(startDate, stopDate) {
-    //   var dateArray = new Array();
-    //   var currentDate = weekStart;
-    //   while (currentDate <= weekEnd) {
-    //     dateArray.push(currentDate)
-    //     currentDate = currentDate.addDays(1);
-    //   }
-    //   // return dateArray;
-    // // }
-    // // this.setState({
-    // //     startDate: weekStart,
-    // //     endDate: weekEnd
-    // // })
+    
   }
 
+  let s = moment(startDate, dateFormat).toLocaleString()// .toISOString();
+  let e = moment(startDate, dateFormat).add(6, 'days').toLocaleString()//.toISOString();
+  
   return (
     <div>
-      <img src={img} alt='' />
 
       <div style={{ width: '700px' }}>
         <Bar options={options} data={data} />
@@ -350,47 +321,11 @@ const Dashboard = () =>
         placeholderText="Select Week"
         className='form-control analytics-date-selector weekly-date-eod'
         onChange={handleDateChange}
-        // onChange={(date) => {
-        //   console.log('date')
-        //   console.log(date)
-        //   setStartDate(date)
-        // }}
-
-        // onChange={(date) => {
-        //   setStartDate(date)
-        //   console.log('date')
-        //   console.log(date)
-        // }
-        // maxDate={new Date(moment(calendarMaxDate, dateFormat).subtract(1, 'weeks').endOf('isoWeek').format('l'))}
-        // minDate={new Date('2021-02-01')}
         startDate={new Date(s)}
         endDate={new Date(e)}
-        // value={periodUI}
         selected={new Date(moment(startDate, dateFormat).format('l'))}
         selectsRange
-        // disabled={sensorData.loading}
       />
-
-      {/* <DatePicker
-                  // minDate={startDate}
-                  selected={endDate}
-                  onChange={(date) => {
-                    setStartDate(date)
-                    console.log('date')
-                    console.log(date)
-                  }
-                    
-                  }
-                  showWeekNumbers
-                  showWeekPicker
-                  locale={"en-GB"}
-                  dateFormat="I/R"
-                  todayButton={"Today"} /> */}
-
-
-      {/* <Line options={options} data={data} /> */}
-
-      {/* <Chart  data={dataBarOption} /> */}
     </div>
   )
 }
