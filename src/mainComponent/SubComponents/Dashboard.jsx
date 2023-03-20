@@ -15,8 +15,8 @@ import
   Legend,
   TimeScale
 } from 'chart.js';
-import { Bar, Chart, Line } from 'react-chartjs-2';
-import faker from 'faker';
+import { Bar } from 'react-chartjs-2';
+
 import { useEffect } from 'react';
 
 ChartJS.register(
@@ -162,7 +162,7 @@ export const options = {
   },
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+// const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 // const dataBar = [
 //   { year: 2010, count: 10 },
