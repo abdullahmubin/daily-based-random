@@ -292,15 +292,55 @@ const Dashboard = () =>
     console.log('endDate: ' + weekEnd)
 
     var now = weekStart, dates = [];
-
+    let dateWithVal = []
     while (moment(now).isSameOrBefore(moment(weekEnd)))
     {
-      dates.push(moment(now).format('M/D/YYYY'));
+      // dates.push(moment(now).format('M/D/YYYY'));
+      let currentDate = moment(now).format('M/D/YYYY');
+      dates.push(currentDate);
+
+      // let obj = {
+      //   label: "# Durata reale",
+      //   //strokeColor: "rgba(51, 122, 183, 0.6)",
+      //   //pointColor: "rgba(51, 122, 183, 0.6)",
+      //   backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      //   borderColor: 'rgba(255,99,132,1)',
+      //   barThickness: 70,
+      //   barPercentage: 0.9,
+      //   categoryPercentage: 1,
+      //   data: [6100, 615, 705]
+      // }
+
+      let randomNum = Math.floor(Math.random() * 100);
+      let currentDayWorkTime = 6100 + randomNum;
+
+      dateWithVal.push(currentDayWorkTime)
+
       now = moment(now).add(1, 'days');
     }
 
     console.log('handle change');
     console.log(dates)
+
+    let dataSetList = [];
+    let obj = {
+      label: "# Durata reale",
+      //strokeColor: "rgba(51, 122, 183, 0.6)",
+      //pointColor: "rgba(51, 122, 183, 0.6)",
+      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      borderColor: 'rgba(255,99,132,1)',
+      barThickness: 70,
+      barPercentage: 0.9,
+      categoryPercentage: 1,
+      data: dateWithVal
+    }
+    dataSetList.push(obj);
+    let allDataObj = {};
+
+    allDataObj.labels = dates;
+    allDataObj.datasets = dataSetList
+
+    setAllData(allDataObj)
 
   }
 
