@@ -1,7 +1,9 @@
 .App {
   text-align: center;
 }
-
+.modal{
+  z-index: 999999;
+}
 /* .ReactModal__Overlay {
   opacity: 0;
   transition: opacity 2000ms ease-in-out;
