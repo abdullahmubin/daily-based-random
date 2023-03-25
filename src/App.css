@@ -4,6 +4,9 @@
 .modal{
   z-index: 999999;
 }
+.table-relative-left {
+  left: 12px;
+}
 /* .ReactModal__Overlay {
   opacity: 0;
   transition: opacity 2000ms ease-in-out;
